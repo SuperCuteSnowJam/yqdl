@@ -5,14 +5,14 @@ import com.DXTech.YQDL.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("UserService")
+@Service
 public class UserService {
 
     @Autowired
     private UserDao userDao;
 
-    public User queryUser(int id){
-        return userDao.getUserById(id);
+    public User getUserByName(String name,String password){
+        return userDao.getUserByName(name,password);
     }
 
 
