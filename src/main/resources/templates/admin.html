@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>电力系统</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">站点信息查询</a>
+    </li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">站点信息管理</a></li>
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">未开发1</a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">未开发2</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+        <div class="panel panel-default">
+            <div class="panel-heading"></div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input id = "stationname" type="text" class="form-control" placeholder="请输入你要查询的站点名称">
+                    <span class="input-group-btn">
+        <button class="btn btn-default" type="button" onclick="select()">查询</button>
+      </span>
+                </div><!-- /input-group -->
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>图片名称</th>
+                        <th>图片描述</th>
+                        <th>站点名称</th>
+
+                    </tr>
+                    </thead>
+                    <tbody th:each="psi:${psiList}">
+                    <tr>
+                        <td th:text="${psi.id}"></td>
+                        <td th:text="${psi.image_name}"></td>
+                        <td th:text="${psi.image_desc}"></td>
+                        <td th:text="${psi.power_station_name}"></td>
+                        <td><div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default">下载</button>
+                        </div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="profile">
+        <div class="panel panel-default">
+            <div class="panel-heading">长岭站站点-图片上传</div>
+            <div class="panel-body">
+                <form action="/uploadImage" method="post" enctype ="multipart/form-data">
+                    <label for="file" class="btn btn-primary" style="float: left;height: 30px;width: 180px;margin-right: 20px">选择电站照片</label>
+                    <input  id="file" name="file" type="file" style="float: left;display:none"/>
+                    <input  class="btn btn-primary" type="submit" value="上传" style="float: left">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="messages">Third</div>
+    <div role="tabpanel" class="tab-pane" id="settings">Foulth</div>
+</div>
+
+</body>
+
+<script>
+    function select() {
+        var stationName = document.getElementById("stationname").value;
+        window.location.href="/getStationImageByStationName?stationName=" +stationName + "";
+    }
+    function downloadImg() {
+        window.location.href="/downloadImg";
+    }
+</script>
+</html>

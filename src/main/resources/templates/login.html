@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>login</title>
+    <title>鼎向电力管理系统登录界面</title>
     <link rel="stylesheet" type="text/css" th:href="@{css/style.css}"/>
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 </head>
@@ -38,7 +38,7 @@
             dataType: "json",
             success : function(data) {
                 if (data){
-                    window.location.href = "/login";
+                    window.location.href = "/admin";
                 }
             },
             error : function(data){
