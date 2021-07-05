@@ -28,7 +28,7 @@ public class PowerStationController {
 
         List<PowerStationImage> psiList = powerStationImageService.getStationImageByStationName(stationName);
         map.addAttribute("psiList",psiList);
-        return "admin";
+        return "manage_core";
     }
 
 }

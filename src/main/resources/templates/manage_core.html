@@ -2,19 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>电力系统</title>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>鼎向电力-管理界面</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body style=" background: url(/image/company_background.png) no-repeat center center fixed; background-size: 100%;">
 
 <img src="/image/company_logo.jpg" class="form-group img-thumbnail" width="20%"/>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">站点信息查询</a>
-    </li>
-    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">站点信息管理</a></li>
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">站点信息-查询</a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">站点信息-管理</a></li>
     <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">未开发1</a></li>
     <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">未开发2</a></li>
 </ul>
@@ -24,14 +23,14 @@
     <div role="tabpanel" class="tab-pane active" id="home">
         <div class="panel panel-default">
             <div class="panel-heading"></div>
+            <br>
             <div class="col-lg-6">
                 <div class="input-group">
                     <input id = "stationname" type="text" class="form-control" placeholder="请输入你要查询的站点名称">
-                    <span class="input-group-btn">
-        <button class="btn btn-default" type="button" onclick="select()">查询</button>
-      </span>
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" onclick="select()">查询</button></span>
                 </div><!-- /input-group -->
             </div>
+            <br><br>
             <div class="panel-body">
                 <table class="table table-bordered" style=" background: url(/image/company_background.png) no-repeat center center fixed; background-size: 100%;">
                     <thead>
