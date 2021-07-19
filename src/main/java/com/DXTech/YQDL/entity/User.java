@@ -3,7 +3,8 @@ package com.DXTech.YQDL.entity;
 public class User {
     private int id;
     private String username;
-    private int age;
+    private String password;
+    private String type;
 
     public int getId() {
         return id;
@@ -21,12 +22,20 @@ public class User {
         this.username = username;
     }
 
-    public int getAge() {
-        return age;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
@@ -34,7 +43,8 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", age=" + age +
+                ", password='" + password + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

@@ -13,8 +13,8 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">站点信息-查询</a></li>
-    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">站点信息-管理</a></li>
-    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">未开发1</a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">图片信息-查询</a></li>
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">图片信息-上传</a></li>
     <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">未开发2</a></li>
 </ul>
 
@@ -27,29 +27,34 @@
             <div class="col-lg-6">
                 <div class="input-group">
                     <input id = "stationname" type="text" class="form-control" placeholder="请输入你要查询的站点名称">
-                    <span class="input-group-btn"><button class="btn btn-default" type="button" onclick="select()">查询</button></span>
+                    <span class="input-group-btn">
+                        <div class="btn-group" role="group" aria-label="...">
+                          <button type="button" class="btn btn-default" onclick="select()">查询</button>
+                        </div>
+
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#addStation">添加</button>
+                    </span>
                 </div><!-- /input-group -->
             </div>
             <br><br>
             <div class="panel-body">
-                <table class="table table-bordered" style=" background: url(/image/company_background.png) no-repeat center center fixed; background-size: 100%;">
+                <table id = "cen-table" class="table table-bordered" style=" background: url(/image/company_background.png) no-repeat center center fixed; background-size: 100%;">
                     <thead>
                     <tr>
-                        <th>序号</th>
-                        <th>图片名称</th>
-                        <th>图片描述</th>
-                        <th>站点名称</th>
-
+                        <th>供电站序号</th>
+                        <th>供电站名称</th>
+                        <th>电压等级</th>
+                        <th>供电站描述</th>
                     </tr>
                     </thead>
-                    <tbody th:each="psi:${psiList}">
+                    <tbody th:each="ps:${psList}">
                     <tr>
-                        <td th:text="${psi.id}"></td>
-                        <td th:text="${psi.image_name}"></td>
-                        <td th:text="${psi.image_desc}"></td>
-                        <td th:text="${psi.power_station_name}"></td>
+                        <td th:text="${ps.id}"></td>
+                        <td th:text="${ps.name}"></td>
+                        <td th:text="${ps.voltage_level}"></td>
+                        <td th:text="${ps.desc}"></td>
                         <td><div class="btn-group" role="group">
-                            <button type="button" class="btn btn-default">下载</button>
+                            <button th:station_id="${ps.id}"  th:station_name="${ps.name}" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" onclick = "delete_station(this)">删除</button>
                         </div></td>
                     </tr>
                     </tbody>
@@ -59,9 +64,43 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="profile">
         <div class="panel panel-default">
+            <div class="panel-body">
+                <table id = "image-table" class="table table-bordered" style=" background: url(/image/company_background.png) no-repeat center center fixed; background-size: 100%;">
+                    <thead>
+                    <tr>
+                        <th>图片序号</th>
+                        <th>图片原先名称</th>
+                        <th>图片类型</th>
+                        <th>图片大小</th>
+                        <th>图片名称</th>
+                        <th>图片描述</th>
+                        <th>图片所属站点名称</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="psi:${psiList}">
+                    <tr>
+                        <td th:text="${psi.id}"></td>
+                        <td th:text="${psi.origin_name}"></td>
+                        <td th:text="${psi.file_type}"></td>
+                        <td th:text="${psi.file_size}"></td>
+                        <td th:text="${psi.file_name}"></td>
+                        <td th:text="${psi.file_desc}"></td>
+                        <td th:text="${psi.power_station_id}"></td>
+                        <td><div class="btn-group" role="group">
+                            <button th:data="${psi.file_name}" type="button" class="btn btn-primary" onclick = "downloadimage(this)">下载</button>
+                            <button type="button" class="btn btn-primary">预览</button>
+                        </div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="messages">
+        <div class="panel panel-default">
             <div class="panel-heading">长岭站站点-图片上传</div>
             <div class="panel-body">
-                <form action="/uploadImage" method="post" enctype ="multipart/form-data">
+                <form action="/uplodeFile" method="post" enctype ="multipart/form-data">
                     <label for="file" class="btn btn-primary" style="float: left;height: 30px;width: 180px;margin-right: 20px">选择电站照片</label>
                     <input  id="file" name="file" type="file" style="float: left;display:none"/>
                     <input  class="btn btn-primary" type="submit" value="上传" style="float: left">
@@ -69,19 +108,106 @@
             </div>
         </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="messages">Third</div>
     <div role="tabpanel" class="tab-pane" id="settings">Foulth</div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><strong>您确认执行该操作吗？</strong></h4>
+                </div>
+                <div class="modal-body">
+                    此操作无法撤消。这将永久删除 [<strong id = 'strong_station'></strong>] 该站点信息并删除该站点下保存的所有图片信息！
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick = "confirm_delete_station()">确认删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--添加站点-->
+    <div class="modal fade" id="addStation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><strong>该操作会增加一个站点</strong></h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="input-group">
+                        <input id = 'addstationname' type="text" class="form-control" placeholder="请输入您要添加的站点名称(必填)" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2">站</span>
+                    </div>
+
+                    <div class="input-group">
+                        <input id = 'addstationvoltage_level' type="text" class="form-control" placeholder="请输入站点电压等级(必填)" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2">kv</span>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">请输入站点描述信息</span>
+                        <input id = 'addstationdesc' type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder = "非必填">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick = "confirm_add_station()">确认添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
 
 <script>
+    window.deletestationid = '-1' ;
+    window.deletestationname = '-1' ;
     function select() {
         var stationName = document.getElementById("stationname").value;
-        window.location.href="/getStationImageByStationName?stationName=" +stationName + "";
+        window.location.href="/getStationByName?name=" +stationName + "";
     }
     function downloadImg() {
         window.location.href="/downloadImg";
     }
+    function delete_station(obj){
+        window.deletestationid = $(obj).attr("station_id")
+        window.deletestationname = $(obj).attr("station_name")
+        $('#strong_station').text(window.deletestationname)
+    }
+
+    <!--确认删除已存在的站点-->
+    function confirm_delete_station(){
+        const station_id = window.deletestationid;
+        const station_name = window.deletestationname;
+        window.deletestationid = '-1' ;
+        window.deletestationname = '-1' ;
+        window.location.href = "/deleteStationById?id="+station_id+"";
+    }
+
+    <!--确认添加新的站点-->
+    function confirm_add_station(){
+        const addstationname = $('#addstationname').val() + "站"
+        const addstationvoltage_level = $('#addstationvoltage_level').val() + "kV"
+        const addstationdesc = $('#addstationdesc').val()
+        $('#addstationname').val("")
+        $('#addstationvoltage_level').val("")
+        $('#addstationdesc').val("")
+        window.location.href = "/insertStation?name=" + addstationname+ "&voltage_level=" + addstationvoltage_level + "&desc=" + addstationdesc+ "";
+    }
+
+    function downloadimage(obj){
+        const filename = $(obj).attr("data")
+        window.location.href = "/downloadFile/" + filename
+    }
+
 </script>
 </html>

@@ -22,22 +22,4 @@ public class PowerStationImageService {
         return powerStationImageDao.getStationImageByStationName(name);
     }
 
-    public boolean uploadImage(MultipartFile file){
-        System.out.println("上传文件的名称是" + file.getName());
-        try{
-        PowerStationImage psi = new PowerStationImage();
-        psi.setImage_name(file.getName());
-        psi.setImage_desc("----");
-        psi.setPower_station_name("长岭站");
-        psi.setImage_info(file.getBytes());
-        powerStationImageDao.insertImage(psi);
-    }catch (Exception e){
-        e.printStackTrace();
-    }
-        return true;
-    }
-
-    public PowerStationImage downloadImage(){
-        return powerStationImageDao.downloadImage();
-    }
 }

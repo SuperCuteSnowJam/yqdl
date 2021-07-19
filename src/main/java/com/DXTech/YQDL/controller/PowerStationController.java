@@ -21,12 +21,31 @@ public class PowerStationController {
     @Autowired
     private PowerStationImageService powerStationImageService;
 
-    @GetMapping("/getStationImageByStationName")
-    public String getStationImageByStationName(@RequestParam("stationName") String stationName, ModelMap map) {
+    @GetMapping("/getStationByName")
+    public String getStationByName(@RequestParam("name") String name, ModelMap map) {
+        List<PowerStation> psList = powerStationService.getStationByName(name);
+        map.addAttribute("psList",psList);
+        List<PowerStationImage> psiList = powerStationImageService.getStationImage();
+        map.addAttribute("psiList",psiList);
+        return "manage_core";
+    }
+
+    @GetMapping("/deleteStationById")
+    public String deleteStationById(@RequestParam("id") String id, ModelMap map) {
+        powerStationService.deleteStationById(id);
         List<PowerStation> psList = powerStationService.getStation();
         map.addAttribute("psList",psList);
+        List<PowerStationImage> psiList = powerStationImageService.getStationImage();
+        map.addAttribute("psiList",psiList);
+        return "manage_core";
+    }
 
-        List<PowerStationImage> psiList = powerStationImageService.getStationImageByStationName(stationName);
+    @GetMapping("/insertStation")
+    public String insertStation(@RequestParam("name") String name,@RequestParam("voltage_level") String voltage_level,@RequestParam("desc") String desc, ModelMap map) {
+        powerStationService.insertStation(name,voltage_level,desc);
+        List<PowerStation> psList = powerStationService.getStation();
+        map.addAttribute("psList",psList);
+        List<PowerStationImage> psiList = powerStationImageService.getStationImage();
         map.addAttribute("psiList",psiList);
         return "manage_core";
     }

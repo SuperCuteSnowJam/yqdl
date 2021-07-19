@@ -16,4 +16,16 @@ public class PowerStationService {
     public List<PowerStation> getStation(){
         return powerStationDao.getStation();
     }
+
+    public List<PowerStation> getStationByName(String name){
+        return powerStationDao.getStationByName(name);
+    }
+
+    public boolean deleteStationById(String id){
+        return powerStationDao.deleteStationById(id);
+    }
+
+    public boolean insertStation(String name,String voltage_level,String desc){
+        return powerStationDao.insertStation(name,voltage_level,desc);
+    }
 }

@@ -14,13 +14,14 @@ public interface PowerStationImageDao {
     @Select("select * from power_station_image")
     List<PowerStationImage> getStationImage();
 
-    @Select("select * from power_station_image where power_station_name=#{power_station_name}")
+    @Select("select a.* from power_station_image a left join power_station b on a.power_station_id = b.id where b.power_station_name=#{power_station_name}")
     List<PowerStationImage> getStationImageByStationName(String power_station_name);
 
-    @Insert("insert into power_station_image(image_name,image_desc,power_station_name,image_info) values(#{e.image_name},#{e.image_desc},#{e.power_station_name},#{e.image_info,jdbcType=BLOB})")
-    boolean insertImage(@Param("e") PowerStationImage photo);
+    @Insert("insert into power_station_image(origin_name,file_type,file_size,file_name,file_path,file_desc,power_station_id) " +
+            "values(#{image.origin_name},#{image.file_type},#{image.file_size},#{image.file_name},#{image.file_path},#{image.file_desc},${image.power_station_id})")
+    boolean insertImage(@Param("image") PowerStationImage image);
 
-    @Select("select * from power_station_image where id = 3")
-    PowerStationImage downloadImage();
+    @Select("select * from power_station_image where file_name = #{f_n}")
+    PowerStationImage getImageByFileName(String f_n);
 
 }

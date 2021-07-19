@@ -3,62 +3,27 @@
 <head>
     <meta charset="utf-8">
     <title>鼎向电力管理系统登录界面</title>
-    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body style=" background: url(/image/bac.jpg) no-repeat center center fixed; background-size: 100%;">
 
-
-<div class="modal-dialog" style="margin-top: 10%;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <img src="/image/company_logo.jpg" class="form-group img-thumbnail center-block" width="85%"/>
-            <h1 class="modal-title text-center" id="myModalLabel"><span class="label label-primary">鼎 向 电 力 系 统 账 号 登 录</span></h1>
-        </div>
-        <div class="modal-body" id = "model-body">
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon glyphicon glyphicon-user"></span>
-                    <input type="text" class="form-control" id="userInp" placeholder="用户名" autocomplete="off">
-                </div>
-
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon glyphicon glyphicon-lock"></span>
-                    <input type="password" class="form-control" id="pwdInp" placeholder="密码" autocomplete="off">
-                </div>
-
-            </div>
-        </div>
-        <div class="modal-footer">
-            <div class="form-group">
-                <button type="button" class="btn btn-primary form-control" onclick="login()">登 录</button>
-            </div>
-
-        </div>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal -->
-
+<!-- Single button -->
+<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Action <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+    </ul>
+</div>
 </body>
 <script>
-    function login() {
-        let name = document.getElementById("userInp").value;
-        let pwd = document.getElementById("pwdInp").value;
-        $.ajax({
-            url : "/getUserByName",// 获取自己系统后台用户信息接口
-            data :{"pwd":pwd,"name":name},
-            type : "POST",
-            dataType: "json",
-            success : function(data) {
-                if (data){
-                    window.location.href = "/admin";
-                }
-            },
-            error : function(data){
-                window.alert("用户名或者密码错误，请重新输入");
-            }
-        });
-    }
+
 </script>
 </html>

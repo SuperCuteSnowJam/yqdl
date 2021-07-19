@@ -2,8 +2,9 @@ package com.DXTech.YQDL.entity;
 
 public class PowerStation {
     private int id;
-    private String power_level;
-    private String power_station_name;
+    private String name;
+    private String voltage_level;
+    private String desc;
 
     public int getId() {
         return id;
@@ -13,19 +14,37 @@ public class PowerStation {
         this.id = id;
     }
 
-    public String getPower_level() {
-        return power_level;
+    public String getName() {
+        return name;
     }
 
-    public void setPower_level(String power_level) {
-        this.power_level = power_level;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPower_station_name() {
-        return power_station_name;
+    public String getVoltage_level() {
+        return voltage_level;
     }
 
-    public void setPower_station_name(String power_station_name) {
-        this.power_station_name = power_station_name;
+    public void setVoltage_level(String voltage_level) {
+        this.voltage_level = voltage_level;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    @Override
+    public String toString() {
+        return "PowerStation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", voltage_level='" + voltage_level + '\'' +
+                ", desc='" + desc + '\'' +
+                '}';
     }
 }
