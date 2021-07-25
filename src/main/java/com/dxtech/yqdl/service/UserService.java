@@ -1,7 +1,7 @@
-package com.DXTech.YQDL.service;
+package com.dxtech.yqdl.service;
 
-import com.DXTech.YQDL.dao.UserDao;
-import com.DXTech.YQDL.entity.User;
+import com.dxtech.yqdl.dao.UserDao;
+import com.dxtech.yqdl.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

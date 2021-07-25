@@ -1,6 +1,6 @@
-package com.DXTech.YQDL.dao;
+package com.dxtech.yqdl.dao;
 
-import com.DXTech.YQDL.entity.User;
+import com.dxtech.yqdl.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

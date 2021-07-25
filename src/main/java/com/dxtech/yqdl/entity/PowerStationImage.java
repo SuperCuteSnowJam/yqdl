@@ -1,4 +1,4 @@
-package com.DXTech.YQDL.entity;
+package com.dxtech.yqdl.entity;
 
 public class PowerStationImage {
 

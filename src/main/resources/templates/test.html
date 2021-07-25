@@ -8,22 +8,58 @@
     <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body style=" background: url(/image/bac.jpg) no-repeat center center fixed; background-size: 100%;">
-
-<!-- Single button -->
-<div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Action <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li role="separator" class="divider"></li>
-        <li><a href="#">Separated link</a></li>
-    </ul>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#upload_file_Modal">删除</button>
+<!-- Modal -->
+<div class="modal fade" id="upload_file_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><strong>您确认执行该操作吗？</strong></h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon">站点名称  </span>
+                    <input id = 'image_station_name' type="text" class="form-control" placeholder="红卫站" aria-describedby="basic-addon2" readonly = "readonly">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">请输入图片描述信息</span>
+                    <input id = 'image_desc' type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder = "非必填">
+                </div>
+                <br>
+                <div class="input-group">
+                    <label for="upFile">
+                        <div id="upFileBtn" class="btn btn-primary" type="button">选择Excel</div>
+                    </label>
+                    <input id="upFile" name="multipartFile" style="display:none" type="file">
+                </div>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="uploadFile()">确认上传</button>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script>
+
+    function uploadFile() {
+        var file = $("#upFile")[0].files[0];
+        var formData = new FormData();
+        formData.append("file",file);
+        $.ajax({
+            type:'post',
+            url:'/uplodeFile',
+            processData: false,
+            contentType:false,
+            data:formData,
+            success:function (msg) {
+            }
+        })
+    }
 
 </script>
 </html>

@@ -1,12 +1,14 @@
-package com.DXTech.YQDL.service;
+package com.dxtech.yqdl.service;
 
-import com.DXTech.YQDL.dao.PowerStationImageDao;
-import com.DXTech.YQDL.entity.PowerStationImage;
-import com.DXTech.YQDL.utils.ResponseInfo;
-import com.DXTech.YQDL.utils.ResponseUtil;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
+import com.dxtech.yqdl.dao.PowerStationImageDao;
+import com.dxtech.yqdl.entity.PowerStationImage;
+import com.dxtech.yqdl.utils.ResponseInfo;
+import com.dxtech.yqdl.utils.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +25,7 @@ public class FileInfoService {
     @Autowired
     private PowerStationImageDao powerStationImageDao;
 
-    public ResponseInfo<?> upload(MultipartFile file) throws IOException {
+    public ResponseInfo<?> upload(MultipartFile file,int stationId,String img_desc) throws IOException {
         //基础路径  E:/springboot-upload/image/
         String basePath = "C:/yqdl-upload/image/";
         File fileDir = new File(basePath);
@@ -43,9 +45,9 @@ public class FileInfoService {
             fileInfo.setFile_type(file.getContentType());
             fileInfo.setFile_size(String.valueOf(file.getSize()));
             fileInfo.setFile_name(new_filename);
-            fileInfo.setFile_desc("");
+            fileInfo.setFile_desc(img_desc);
             fileInfo.setFile_path(basePath);
-            fileInfo.setPower_station_id(1);
+            fileInfo.setPower_station_id(stationId);
             System.out.println(fileInfo.toString());
             powerStationImageDao.insertImage(fileInfo);
         } catch (Exception e) {

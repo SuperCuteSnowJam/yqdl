@@ -1,6 +1,6 @@
-package com.DXTech.YQDL.dao;
+package com.dxtech.yqdl.dao;
 
-import com.DXTech.YQDL.entity.PowerStationImage;
+import com.dxtech.yqdl.entity.PowerStationImage;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,7 +21,10 @@ public interface PowerStationImageDao {
             "values(#{image.origin_name},#{image.file_type},#{image.file_size},#{image.file_name},#{image.file_path},#{image.file_desc},${image.power_station_id})")
     boolean insertImage(@Param("image") PowerStationImage image);
 
-    @Select("select * from power_station_image where file_name = #{f_n}")
+    @Select("select * from power_station_image where origin_name = #{f_n}")
     PowerStationImage getImageByFileName(String f_n);
+
+    @Select("select * from power_station_image where origin_name = #{f_n}")
+    List<PowerStationImage> listImageByFileName(String f_n);
 
 }

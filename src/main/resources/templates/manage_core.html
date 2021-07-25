@@ -12,15 +12,15 @@
 <img src="/image/company_logo.jpg" class="form-group img-thumbnail" width="20%"/>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">站点信息-查询</a></li>
-    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">图片信息-查询</a></li>
-    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">图片信息-上传</a></li>
-    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">未开发2</a></li>
+    <li role="presentation" th:class="${sheetheader}"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">站点信息-查询</a></li>
+    <li role="presentation" th:class="${sheetheader2}"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">图片信息-查询</a></li>
+    <li role="presentation" th:class="${sheetheader3}"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">图片信息-上传</a></li>
+    <li role="presentation" th:class="${sheetheader4}"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">未开发2</a></li>
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="home">
+    <div role="tabpanel" th:class="${sheet}" id="home">
         <div class="panel panel-default">
             <div class="panel-heading"></div>
             <br>
@@ -56,15 +56,29 @@
                         <td><div class="btn-group" role="group">
                             <button th:station_id="${ps.id}"  th:station_name="${ps.name}" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" onclick = "delete_station(this)">删除</button>
                         </div></td>
+                        <td>
+                            <button th:station_id="${ps.id}"  th:station_name="${ps.name}" type="button" class="btn btn-success" data-toggle="modal" data-target="#upload_file_Modal" onclick = "uploadFile_action(this)">上传</button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="profile">
+    <div role="tabpanel" th:class="${sheet2}" id="profile">
         <div class="panel panel-default">
             <div class="panel-body">
+                <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input id = "imagename" type="text" class="form-control" placeholder="请输入图片名称...">
+                        <span class="input-group-btn">
+                             <button class="btn btn-default" type="button" onclick="queryImage()">查询</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+                </div>
+                <br>
                 <table id = "image-table" class="table table-bordered" style=" background: url(/image/company_background.png) no-repeat center center fixed; background-size: 100%;">
                     <thead>
                     <tr>
@@ -96,19 +110,12 @@
             </div>
         </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="messages">
+    <div role="tabpanel" th:class="${sheet3}" id="messages">
         <div class="panel panel-default">
-            <div class="panel-heading">长岭站站点-图片上传</div>
-            <div class="panel-body">
-                <form action="/uplodeFile" method="post" enctype ="multipart/form-data">
-                    <label for="file" class="btn btn-primary" style="float: left;height: 30px;width: 180px;margin-right: 20px">选择电站照片</label>
-                    <input  id="file" name="file" type="file" style="float: left;display:none"/>
-                    <input  class="btn btn-primary" type="submit" value="上传" style="float: left">
-                </form>
-            </div>
+            <div class="panel-heading">未开发</div>
         </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="settings">Foulth</div>
+    <div role="tabpanel" th:class="${sheet4}" id="settings">Foulth</div>
 
 
 
@@ -145,12 +152,12 @@
                         <input id = 'addstationname' type="text" class="form-control" placeholder="请输入您要添加的站点名称(必填)" aria-describedby="basic-addon2">
                         <span class="input-group-addon" id="basic-addon2">站</span>
                     </div>
-
+                    <br>
                     <div class="input-group">
                         <input id = 'addstationvoltage_level' type="text" class="form-control" placeholder="请输入站点电压等级(必填)" aria-describedby="basic-addon2">
                         <span class="input-group-addon" id="basic-addon2">kv</span>
                     </div>
-
+                    <br>
                     <div class="input-group">
                         <span class="input-group-addon">请输入站点描述信息</span>
                         <input id = 'addstationdesc' type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder = "非必填">
@@ -164,6 +171,41 @@
             </div>
         </div>
     </div>
+
+    <!--上传图片-->
+    <div class="modal fade" id="upload_file_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"> <strong>您确认执行该操作吗？</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">站点名称  </span>
+                        <input id = "image_upload_station_name" type="text" class="form-control" aria-describedby="basic-addon2" readonly = "readonly">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">请输入图片描述信息</span>
+                        <input id = 'image_desc' type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder = "非必填">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <label for="upFile">
+                            <div id="upFileBtn" class="btn btn-primary" type="button">选择Excel</div>
+                        </label>
+                        <input id="upFile" name="multipartFile" style="display:none" type="file">
+                    </div>
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="uploadFile()">确认上传</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
@@ -171,6 +213,8 @@
 <script>
     window.deletestationid = '-1' ;
     window.deletestationname = '-1' ;
+    window.uploadStationId = '-1' ;
+    window.uploadStationName = '-1' ;
     function select() {
         var stationName = document.getElementById("stationname").value;
         window.location.href="/getStationByName?name=" +stationName + "";
@@ -207,6 +251,36 @@
     function downloadimage(obj){
         const filename = $(obj).attr("data")
         window.location.href = "/downloadFile/" + filename
+    }
+
+    function queryImage(){
+        let imagename = document.getElementById("imagename").value;
+        window.location.href = "/queryFile?imageName="+imagename+"";
+    }
+
+    function uploadFile_action(obj){
+        const uploadStationId = $(obj).attr("station_id")
+        const uploadStationName = $(obj).attr("station_name")
+        window.uploadStationId = uploadStationId;
+        window.uploadStationName = uploadStationName;
+        $("#image_upload_station_name").val(uploadStationName)
+    }
+
+    function uploadFile() {
+        var file = $("#upFile")[0].files[0];
+        var formData = new FormData();
+        formData.append("file",file);
+        formData.append("stationId",window.uploadStationId);
+        formData.append("img_desc",$('#image_desc').val());
+        $.ajax({
+            type:'post',
+            url:'/uplodeFile',
+            processData: false,
+            contentType:false,
+            data:formData,
+            success:function (msg) {
+            }
+        })
     }
 
 </script>

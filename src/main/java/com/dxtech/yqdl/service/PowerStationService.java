@@ -1,7 +1,7 @@
-package com.DXTech.YQDL.service;
+package com.dxtech.yqdl.service;
 
-import com.DXTech.YQDL.dao.PowerStationDao;
-import com.DXTech.YQDL.entity.PowerStation;
+import com.dxtech.yqdl.dao.PowerStationDao;
+import com.dxtech.yqdl.entity.PowerStation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

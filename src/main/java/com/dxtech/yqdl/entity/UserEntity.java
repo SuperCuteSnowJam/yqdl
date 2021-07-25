@@ -1,9 +1,30 @@
-package com.DXTech.YQDL.entity;
+package com.dxtech.yqdl.entity;
 
-public class User {
+import java.util.HashMap;
+
+/**
+ * @author Carter Wang
+ */
+public class UserEntity {
+
+    /**
+     *  用户ID
+     */
     private int id;
+
+    /**
+     * 用户名称
+     */
     private String username;
+
+    /**
+     * 用户密码
+     */
     private String password;
+
+    /**
+     * 用户类型 A:管理员 B:普通用户
+     */
     private String type;
 
     public int getId() {
@@ -36,15 +57,5 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", type='" + type + '\'' +
-                '}';
     }
 }

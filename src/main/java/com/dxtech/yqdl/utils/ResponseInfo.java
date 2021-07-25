@@ -1,4 +1,4 @@
-package com.DXTech.YQDL.utils;
+package com.dxtech.yqdl.utils;
 
 public class ResponseInfo<T> {
 

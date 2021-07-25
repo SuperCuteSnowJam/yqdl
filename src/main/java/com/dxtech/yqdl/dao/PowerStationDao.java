@@ -1,6 +1,6 @@
-package com.DXTech.YQDL.dao;
+package com.dxtech.yqdl.dao;
 
-import com.DXTech.YQDL.entity.PowerStation;
+import com.dxtech.yqdl.entity.PowerStation;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

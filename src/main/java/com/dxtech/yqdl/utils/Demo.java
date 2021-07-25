@@ -1,10 +1,8 @@
-package com.DXTech.YQDL.utils;
+package com.dxtech.yqdl.utils;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.UUID;
 
 public class Demo {

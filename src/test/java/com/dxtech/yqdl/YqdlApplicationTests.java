@@ -1,4 +1,4 @@
-package com.DXTech.YQDL;
+package com.dxtech.yqdl;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

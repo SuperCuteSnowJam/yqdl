@@ -1,10 +1,9 @@
-package com.DXTech.YQDL.service;
+package com.dxtech.yqdl.service;
 
-import com.DXTech.YQDL.dao.PowerStationImageDao;
-import com.DXTech.YQDL.entity.PowerStationImage;
+import com.dxtech.yqdl.dao.PowerStationImageDao;
+import com.dxtech.yqdl.entity.PowerStationImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,6 +19,16 @@ public class PowerStationImageService {
 
     public List<PowerStationImage> getStationImageByStationName(String name){
         return powerStationImageDao.getStationImageByStationName(name);
+    }
+
+    /**
+     * 输入图片名称获取图片实例
+     *
+     * @param filename 图片名称
+     * @return
+     */
+    public List<PowerStationImage> listImageByFileName(String filename){
+        return powerStationImageDao.listImageByFileName(filename);
     }
 
 }
