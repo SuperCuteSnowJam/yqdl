@@ -30,7 +30,7 @@ public class FileInfoService {
         String basePath = "C:/yqdl-upload/image/";
         File fileDir = new File(basePath);
         if(!fileDir.exists()) {
-            fileDir.mkdir();
+            fileDir.mkdirs();
         }
         String suffixname = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
         String new_filename = UUID.randomUUID()+suffixname;
@@ -65,7 +65,7 @@ public class FileInfoService {
     public void downloadFile(String fileName, HttpServletResponse res) throws UnsupportedEncodingException {
 
         // 通过文件名查找文件信息
-        PowerStationImage fileInfo = powerStationImageDao.getImageByFileName(fileName);
+        PowerStationImage fileInfo = powerStationImageDao.getImageByNowFileName(fileName);
 
         //设置响应头
         res.setContentType("application/force-download");// 设置强制下载不打开

@@ -193,7 +193,7 @@
                     <br>
                     <div class="input-group">
                         <label for="upFile">
-                            <div id="upFileBtn" class="btn btn-primary" type="button">选择Excel</div>
+                            <div id="upFileBtn" class="btn btn-primary" type="button">选择图片</div>
                         </label>
                         <input id="upFile" name="multipartFile" style="display:none" type="file">
                     </div>
@@ -279,6 +279,7 @@
             contentType:false,
             data:formData,
             success:function (msg) {
+                window.location.href="/manage_core"
             }
         })
     }

@@ -24,6 +24,14 @@ public interface PowerStationImageDao {
     @Select("select * from power_station_image where origin_name = #{f_n}")
     PowerStationImage getImageByFileName(String f_n);
 
+    /**
+     * 根据现有文件名称查询文件
+     * @param f_n
+     * @return
+     */
+    @Select("select * from power_station_image where file_name = #{f_n}")
+    PowerStationImage getImageByNowFileName(String f_n);
+
     @Select("select * from power_station_image where origin_name = #{f_n}")
     List<PowerStationImage> listImageByFileName(String f_n);
 
