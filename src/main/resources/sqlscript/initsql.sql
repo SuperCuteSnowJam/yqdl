@@ -29,9 +29,9 @@ CREATE TABLE `power_station_image` (
     `file_name` varchar(100) not null comment '图片名称',
     `file_path` varchar(100) not null comment '图片地址',
     `file_desc` varchar(100) DEFAULT NULL comment '图片描述',
+    `file_qrcode_path` varchar(100)  not NULL comment '图片二维码地址',
     `power_station_id` int NOT NULL comment '图片所属站点id',
     PRIMARY KEY (`id`),
     UNIQUE KEY `image_name` (`file_name`),
     foreign key(power_station_id) references power_station(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 comment = '图片信息表';
-insert into `power_station_image` values(1,'达拉斯小牛','img','20mb','达拉斯独行侠','/a/b/c','NBA德州小强','2');

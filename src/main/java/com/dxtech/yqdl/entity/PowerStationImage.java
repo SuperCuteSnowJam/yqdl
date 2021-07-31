@@ -9,6 +9,7 @@ public class PowerStationImage {
     private String file_name;
     private String file_path;
     private String file_desc;
+    private String file_qrcode_path;
     private int power_station_id;
 
     public int getId() {
@@ -67,6 +68,14 @@ public class PowerStationImage {
         this.file_desc = file_desc;
     }
 
+    public String getFile_qrcode_path() {
+        return file_qrcode_path;
+    }
+
+    public void setFile_qrcode_path(String file_qrcode_path) {
+        this.file_qrcode_path = file_qrcode_path;
+    }
+
     public int getPower_station_id() {
         return power_station_id;
     }
@@ -85,6 +94,7 @@ public class PowerStationImage {
                 ", file_name='" + file_name + '\'' +
                 ", file_path='" + file_path + '\'' +
                 ", file_desc='" + file_desc + '\'' +
+                ", file_qrcode_path='" + file_qrcode_path + '\'' +
                 ", power_station_id=" + power_station_id +
                 '}';
     }

@@ -49,11 +49,27 @@ public class PowerStationImageController {
 
     /**
      * 文件下载
-     * @param fileName
+     * @param fileId
      * @param res
      */
-    @GetMapping(value = "/downloadFile/{fileName}")
-    public void downloadFile(@PathVariable("fileName") String fileName, HttpServletResponse res) throws UnsupportedEncodingException {
-        fileInfoService.downloadFile(fileName, res);
+    @GetMapping(value = "/downloadFile/{fileId}")
+    public void downloadFile(@PathVariable("fileId") int fileId, HttpServletResponse res) throws UnsupportedEncodingException {
+        fileInfoService.downloadFile(fileId, res);
+    }
+
+    /**
+     * 下载二维码
+     * @param fileId
+     * @param res
+     * @throws UnsupportedEncodingException
+     */
+    @GetMapping(value = "/downloadQRcodeFile/{fileId}")
+    public void downloadQRcodeFile(@PathVariable("fileId") int fileId, HttpServletResponse res) throws UnsupportedEncodingException {
+        fileInfoService.downloadQRCodeFile(fileId, res);
+    }
+
+    @PostMapping(value = "/deleteFile")
+    public void deleteFile(@RequestParam("fileId") int fileId){
+        fileInfoService.deleteFile(fileId);
     }
 }

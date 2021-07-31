@@ -101,8 +101,10 @@
                         <td th:text="${psi.file_desc}"></td>
                         <td th:text="${psi.power_station_id}"></td>
                         <td><div class="btn-group" role="group">
-                            <button th:data="${psi.file_name}" type="button" class="btn btn-primary" onclick = "downloadimage(this)">下载</button>
-                            <button type="button" class="btn btn-primary">预览</button>
+                            <button th:data="${psi.id}" type="button" class="btn btn-primary" onclick = "downloadimage(this)">下载</button>
+                            <button th:data="${psi.file_name}" type="button" class="btn btn-primary" onclick = "viewimage(this)">预览</button>
+                            <button th:data="${psi.id}" type="button" class="btn btn-primary" onclick="downloadqrcodeimage(this)">下载二维码</button>
+                            <button th:image_id="${psi.id}"  th:image_name="${psi.origin_name}" type="button" data-toggle="modal" data-target="#deleteImage" class="btn btn-danger" onclick="delete_image(this)">删除</button>
                         </div></td>
                     </tr>
                     </tbody>
@@ -119,7 +121,7 @@
 
 
 
-    <!-- Modal -->
+    <!-- 删除站点 -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -172,6 +174,25 @@
         </div>
     </div>
 
+    <!-- 删除站点 -->
+    <div class="modal fade" id="deleteImage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><strong>您确认执行该操作吗？</strong></h4>
+                </div>
+                <div class="modal-body">
+                    此操作无法撤消。这将永久删除 [<strong id = 'strong_image'></strong>] 该图片信息！
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick = "confirm_delete_image()">确认删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--上传图片-->
     <div class="modal fade" id="upload_file_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -215,6 +236,9 @@
     window.deletestationname = '-1' ;
     window.uploadStationId = '-1' ;
     window.uploadStationName = '-1' ;
+    window.deleteImageId = '-1' ;
+    window.deleteImageName = '-1' ;
+
     function select() {
         var stationName = document.getElementById("stationname").value;
         window.location.href="/getStationByName?name=" +stationName + "";
@@ -226,6 +250,12 @@
         window.deletestationid = $(obj).attr("station_id")
         window.deletestationname = $(obj).attr("station_name")
         $('#strong_station').text(window.deletestationname)
+    }
+
+    function delete_image(obj){
+        window.deleteImageId = $(obj).attr("image_id")
+        window.deleteImageName = $(obj).attr("image_name")
+        $('#strong_image').text(window.deleteImageName)
     }
 
     <!--确认删除已存在的站点-->
@@ -248,10 +278,38 @@
         window.location.href = "/insertStation?name=" + addstationname+ "&voltage_level=" + addstationvoltage_level + "&desc=" + addstationdesc+ "";
     }
 
-    function downloadimage(obj){
-        const filename = $(obj).attr("data")
-        window.location.href = "/downloadFile/" + filename
+    <!--确认删除已存在的图片-->
+    function confirm_delete_image(){
+        const imageId = window.deleteImageId
+        var formData = new FormData();
+        formData.append("fileId",imageId);
+        $.ajax({
+            type:'post',
+            url:'/deleteFile',
+            processData: false,
+            contentType:false,
+            data:formData,
+            success:function (msg) {
+                window.location.href="/manage_core"
+            }
+        })
     }
+
+    function downloadimage(obj){
+        const fileId = $(obj).attr("data")
+        window.location.href = "/downloadFile/" + fileId
+    }
+
+    function viewimage(obj){
+        const filename = $(obj).attr("data")
+        window.open("/image/"+filename)
+    }
+
+    function downloadqrcodeimage(obj){
+        const fileId = $(obj).attr("data")
+        window.location.href = "/downloadQRcodeFile/" + fileId
+    }
+
 
     function queryImage(){
         let imagename = document.getElementById("imagename").value;
