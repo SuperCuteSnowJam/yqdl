@@ -330,16 +330,20 @@
         formData.append("file",file);
         formData.append("stationId",window.uploadStationId);
         formData.append("img_desc",$('#image_desc').val());
-        $.ajax({
-            type:'post',
-            url:'/uplodeFile',
-            processData: false,
-            contentType:false,
-            data:formData,
-            success:function (msg) {
-                window.location.href="/manage_core"
-            }
-        })
+        if(file.name.length > 100){
+            window.alert("图片名称不能超过100个字符")
+        }else{
+            $.ajax({
+                type:'post',
+                url:'/uplodeFile',
+                processData: false,
+                contentType:false,
+                data:formData,
+                success:function (msg) {
+                    window.location.href="/manage_core"
+                }
+            })
+        }
     }
 
 </script>
