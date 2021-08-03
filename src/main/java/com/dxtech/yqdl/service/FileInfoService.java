@@ -27,6 +27,14 @@ public class FileInfoService {
     @Autowired
     private PowerStationImageDao powerStationImageDao;
 
+    /**
+     * 文件上传
+     * @param file
+     * @param stationId
+     * @param img_desc
+     * @return
+     * @throws IOException
+     */
     public ResponseInfo<?> upload(MultipartFile file,int stationId,String img_desc) throws IOException {
         //基础路径  E:/springboot-upload/image/
         String basePath = CommonConfig.uploadFilePath;
@@ -47,17 +55,18 @@ public class FileInfoService {
             String text = CommonConfig.urlFormatPath + new_filename;  //这里设置自定义网站url或文字
             String logoPath = "";
             String destPath = CommonConfig.qrcodeFilePath;		//保存地址
+            String qrcodePath = destPath + QRCodeUtils.encode(text, logoPath, destPath, true);
             //调用工具类
 
             //保存文件信息
             PowerStationImage fileInfo = new PowerStationImage();
             fileInfo.setOrigin_name(file.getOriginalFilename());
-            fileInfo.setFile_type(file.getContentType());
+            fileInfo.setFile_type(suffixname.replace(".",""));
             fileInfo.setFile_size(String.valueOf(file.getSize()));
             fileInfo.setFile_name(new_filename);
             fileInfo.setFile_desc(img_desc);
             fileInfo.setFile_path(basePath);
-            fileInfo.setFile_qrcode_path(destPath + QRCodeUtils.encode(text, logoPath, destPath, true));
+            fileInfo.setFile_qrcode_path(qrcodePath);
             fileInfo.setPower_station_id(stationId);
             System.out.println(fileInfo.toString());
             powerStationImageDao.insertImage(fileInfo);
@@ -127,12 +136,12 @@ public class FileInfoService {
 
         // 通过文件名查找文件信息
         PowerStationImage fileInfo = powerStationImageDao.getImageById(fileId);
+        System.out.println(fileInfo);
 
         //设置响应头
         res.setContentType("application/force-download");// 设置强制下载不打开
         res.addHeader("Content-Disposition", "attachment;fileName=" +
-                new String(fileInfo.getOrigin_name().getBytes("gbk"), "iso8859-1"));// 设置文件名
-        res.setHeader("Context-Type", "application/xmsdownload");
+                new String(fileInfo.getFile_qrcode_path().replace(CommonConfig.qrcodeFilePath,"").getBytes("gbk"), "iso8859-1"));// 设置文件名
 
         //判断文件是否存在
         File file = new File(fileInfo.getFile_qrcode_path());
