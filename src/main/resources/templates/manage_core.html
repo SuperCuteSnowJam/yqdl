@@ -99,7 +99,7 @@
                         <td th:text="${psi.file_size}"></td>
                         <td th:text="${psi.file_name}"></td>
                         <td th:text="${psi.file_desc}"></td>
-                        <td th:text="${psi.power_station_id}"></td>
+                        <td th:text="${StationMap.get(psi.power_station_id)}"></td>
                         <td><div class="btn-group" role="group">
                             <button th:data="${psi.id}" type="button" class="btn btn-primary" onclick = "downloadimage(this)">下载</button>
                             <button th:data="${psi.file_name}" type="button" class="btn btn-primary" onclick = "viewimage(this)">预览</button>

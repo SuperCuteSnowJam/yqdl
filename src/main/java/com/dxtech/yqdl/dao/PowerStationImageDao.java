@@ -32,6 +32,9 @@ public interface PowerStationImageDao {
     @Select("select * from power_station_image where origin_name like '%${f_n}%'")
     List<PowerStationImage> listImageByFileName(String f_n);
 
+    @Select("select * from power_station_image a left join power_station b on a.power_station_id = b.id where b.name like '%${stationName}%'")
+    List<PowerStationImage> listImageByStationName(String stationName);
+
     /**
      * 根据文件ID获取文件
      * @param id

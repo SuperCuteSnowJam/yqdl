@@ -10,7 +10,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class PowerStationController {
@@ -26,6 +28,11 @@ public class PowerStationController {
         List<PowerStation> psList = powerStationService.getStationByName(name);
         map.addAttribute("psList",psList);
         List<PowerStationImage> psiList = powerStationImageService.getStationImage();
+
+        Map StationMap = new HashMap();
+        for(PowerStation p:powerStationService.getStation()){
+            StationMap.put(p.getId(),p.getName());
+        }
         map.addAttribute("psiList",psiList);
         map.addAttribute("sheetheader","active");
         map.addAttribute("sheetheader2","");
@@ -35,6 +42,7 @@ public class PowerStationController {
         map.addAttribute("sheet2","tab-pane");
         map.addAttribute("sheet3","tab-pane");
         map.addAttribute("sheet4","tab-pane");
+        map.addAttribute("StationMap",StationMap);
         return "manage_core";
     }
 

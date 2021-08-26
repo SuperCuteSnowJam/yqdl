@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class DoorController {
@@ -38,6 +40,12 @@ public class DoorController {
         List<PowerStationImage> psiList = powerStationImageService.getStationImage();
         map.addAttribute("psiList",psiList);
 
+        Map StationMap = new HashMap();
+        for(PowerStation p:psList){
+            StationMap.put(p.getId(),p.getName());
+        }
+
+
         map.addAttribute("sheetheader","active");
         map.addAttribute("sheetheader2","");
         map.addAttribute("sheetheader3","");
@@ -46,6 +54,7 @@ public class DoorController {
         map.addAttribute("sheet2","tab-pane");
         map.addAttribute("sheet3","tab-pane");
         map.addAttribute("sheet4","tab-pane");
+        map.addAttribute("StationMap",StationMap);
         return "manage_core";
     }
 
@@ -60,8 +69,14 @@ public class DoorController {
             psiList =  powerStationImageService.getStationImage();
         }else{
             psiList = powerStationImageService.listImageByFileName(imageName);
+            psiList.addAll(powerStationImageService.listImageByStationName(imageName));
         }
         map.addAttribute("psiList",psiList);
+
+        Map StationMap = new HashMap();
+        for(PowerStation p:psList){
+            StationMap.put(p.getId(),p.getName());
+        }
 
         map.addAttribute("sheetheader","");
         map.addAttribute("sheetheader2","active");
@@ -71,6 +86,7 @@ public class DoorController {
         map.addAttribute("sheet2","tab-pane active");
         map.addAttribute("sheet3","tab-pane");
         map.addAttribute("sheet4","tab-pane");
+        map.addAttribute("StationMap",StationMap);
         return "manage_core";
     }
 

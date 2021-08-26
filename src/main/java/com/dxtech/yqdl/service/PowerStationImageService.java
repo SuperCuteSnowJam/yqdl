@@ -31,4 +31,9 @@ public class PowerStationImageService {
         return powerStationImageDao.listImageByFileName(filename);
     }
 
+    public List<PowerStationImage> listImageByStationName(String stationName){
+        return powerStationImageDao.listImageByStationName(stationName);
+    }
+
+
 }
