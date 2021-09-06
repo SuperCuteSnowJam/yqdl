@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>鼎向电力-管理界面</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style=" background: url(/img/company_background.png) no-repeat center center fixed; background-size: 100%;">
+
+<img src="/img/company_logo.jpg" class="form-group img-thumbnail" width="20%"/>
+
+<div class="panel panel-default">
+    <div class="panel-heading"><strong>鼎向电力-长岭站-设备区明细</strong></div>
+    <br>
+    <div class="col-lg-6">
+        <div class="input-group">
+            <input id = "stationname" type="text" class="form-control" placeholder="请输入你要查询的设备区名称">
+            <span class="input-group-btn">
+                        <div class="btn-group" role="group" aria-label="...">
+                          <button type="button" class="btn btn-default" onclick="select()">查询</button>
+                        </div>
+
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#addstation">添加</button>
+                    </span>
+        </div><!-- /input-group -->
+    </div>
+    <br><br>
+    <div class="panel-body">
+        <table id = "image-table" class="table table-bordered" style=" background: url(/img/company_background.png) no-repeat center center fixed; background-size: 100%;">
+            <thead>
+            <tr>
+                <th>设备ID</th>
+                <th>设备名称</th>
+                <th>设备备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>1</td><td>220kV开关场</td><td>---</td></tr>
+            <tr><td>2</td><td>110kV开关场</td><td>---</td></tr>
+            <tr><td>3</td><td>35kV开关室</td><td>---</td></tr>
+            <tr><td>4</td><td>主变开关场</td><td>---</td></tr>
+            <tr><td>4</td><td>电容器设备区</td><td>---</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
